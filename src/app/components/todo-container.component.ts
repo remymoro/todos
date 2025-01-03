@@ -7,8 +7,11 @@ import { Todo } from '../shared/interface/todo.interface';
   selector: 'app-todo-container',
   imports: [TodoFormComponent, TodosListComponent],
   template: `
-    <app-todo-form />
-    <app-todos-list [todosList]="todosList()" />
+    <app-todo-form (addTodo)="addTodo($event)" />
+    <app-todos-list
+      (toggleTodo)="toggleTodo($event)"
+      [todosList]="todosList()"
+    />
   `,
   styles: `
     :host { padding: 32px; }
@@ -47,4 +50,25 @@ export class TodoContainerComponent {
       done: false,
     },
   ]);
+
+  addTodo(todo: Todo) {
+    this.todosList.update((todos) => [...todos, todo]);
+  }
+
+  toggleTodo(todoId: string) {
+    this.todosList.update((todos) => {
+      return todos.map((todo) => {
+        // Retour explicite du tableau modifié
+        if (todoId === todo.id) {
+          // Mise à jour de la tâche correspondant à todoId
+          return {
+            ...todo, // Copie de l'objet original
+            done: !todo.done, // Inverse la propriété 'done'
+          };
+        }
+        // Si l'ID ne correspond pas, retourne l'élément inchangé
+        return todo;
+      });
+    });
+  }
 }
