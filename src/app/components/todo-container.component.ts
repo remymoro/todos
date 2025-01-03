@@ -14,6 +14,7 @@ import { Todo } from '../shared/interface/todo.interface';
     />
   `,
   styles: `
+
     :host { padding: 32px; }
   `,
 })

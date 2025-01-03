@@ -32,7 +32,6 @@ export class TodoFormComponent {
         done: false,
         id: '' + Math.floor(Math.random() * 1001),
       };
-
       this.todoName = '';
       this.addTodo.emit(newTodo);
     }
